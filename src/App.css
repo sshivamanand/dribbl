@@ -1,0 +1,100 @@
+.display {
+  display: flex;
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+.contacts {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  height: 102vh;
+  width: 5vw;
+  background-color: #72bf78;
+  transition: width 0.4s;
+}
+
+.chats {
+  display: flex;
+  width: 100%;
+  height: 102vh;
+  background-color: #d3ee98;
+}
+
+.contacts:hover {
+  width: 25vw;
+}
+
+.user-detail {
+  display: flex;
+  background-color: #a0d683;
+  height: 9vh;
+  width: 100%;
+}
+
+.user-img {
+  display: inline-flex;
+  background-color: white;
+  width: 3rem;
+  height: 3rem;
+  margin: 0.5rem;
+  margin-left: 1.5rem;
+  border-radius: 40%;
+}
+
+.search {
+  display: flex;
+  height: 2rem;
+  margin: 1.3rem;
+}
+
+.header {
+  display: flex;
+}
+
+.search-box {
+  border: none;
+  height: 2rem;
+  width: 13vw;
+  margin-top: 1.14rem;
+  border-radius: 10rem;
+  font-size: 1.1rem;
+  padding-left: 1rem;
+  overflow: hidden;
+}
+
+.users {
+  display: block;
+  width: 25vw;
+  height: 140px;
+  padding: 0;
+}
+
+.user {
+  display: inline-flex;
+  height: 7vh;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.user-img-num {
+  display: inline-flex;
+  background-color: white;
+  width: 3rem;
+  height: 3rem;
+  margin: 0.5rem;
+  margin-left: 0.85rem;
+  border-radius: 40%;
+}
+
+.user-name {
+  display: inline-flex;
+  width: 11vw;
+  height: 4vh;
+  background-color: #f3ee9f;
+  padding-left: 1rem;
+  margin: 1rem;
+  border-radius: 10rem;
+  text-align: center;
+}
