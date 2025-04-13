@@ -1,8 +1,17 @@
 import React, { useState } from "react";
 import "./Login-SignUp.css";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function LoginSignUp() {
   const [isLoginActive, setIsLoginActive] = useState(true);
+  const [loginUsername, setLoginUsername] = useState("");
+  const [loginPassword, setLoginPassword] = useState("");
+  const [registerUsername, setRegisterUsername] = useState("");
+  const [registerEmail, setRegisterEmail] = useState("");
+  const [registerPassword, setRegisterPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleRegisterClick = () => {
     setIsLoginActive(false);
@@ -12,23 +21,68 @@ function LoginSignUp() {
     setIsLoginActive(true);
   };
 
+  const handleRegisterSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:3000/signup", {
+        username: registerUsername,
+        email: registerEmail,
+        password: registerPassword,
+      });
+      
+      if (response.status === 200) {
+        setErrorMessage("");
+        alert(`Registration Successful. Please Login now!`);
+        setRegisterUsername(""); 
+        setRegisterEmail("");    
+        setRegisterPassword(""); 
+        setIsLoginActive(true);
+      }
+
+    } catch (error) {
+      setErrorMessage(error.response?.data?.message || "Registration failed");
+    }
+  };
+
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:3000/login", {
+        username: loginUsername,
+        password: loginPassword,
+      });
+      
+      if (response.status === 200) {
+        navigate(`/Home/${loginUsername}`);
+      } else {
+      }
+
+    } catch (error) {
+      alert("Login Failed!");
+      setErrorMessage(error.response?.data?.message || "Login failed");
+    }
+  };
+  
+
   return (
     <div className={`container ${isLoginActive ? "" : "active"}`}>
+
+      // login box
       <div className="form-box login">
         <form action="#">
           <h1>Login</h1>
           <div className="input-box">
-            <input type="text" placeholder="Username" required />
+            <input type="text" placeholder="Username" name="loginUsername" required onChange={(e) => setLoginUsername (e.target.value)}/>
             <i className="bx bxs-user"></i>
           </div>
           <div className="input-box">
-            <input type="password" placeholder="Password" required />
+            <input type="password" placeholder="Password" name="loginPassword" required onChange={(e) => setLoginPassword (e.target.value)}/>
             <i className="bx bxs-lock-alt"></i>
           </div>
           <div className="forgot-link">
             <a href="#">Forgot Password?</a>
           </div>
-          <button type="submit" className="btn">
+          <button type="submit" className="btn" onClick={handleLoginSubmit}>
             Login
           </button>
           <p>or login with social platforms</p>
@@ -49,22 +103,23 @@ function LoginSignUp() {
         </form>
       </div>
 
+      // register
       <div className="form-box register">
         <form action="#">
           <h1>Registration</h1>
           <div className="input-box">
-            <input type="text" placeholder="Username" required />
+            <input type="text" placeholder="Username" name="registerUsername" onChange={(e) => setRegisterUsername (e.target.value)} required />
             <i className="bx bxs-user"></i>
           </div>
           <div className="input-box">
-            <input type="email" placeholder="Email" required />
+            <input type="email" placeholder="Email" name="registerEmail" required onChange={(e) => setRegisterEmail (e.target.value)}/>
             <i className="bx bxs-envelope"></i>
           </div>
           <div className="input-box">
-            <input type="password" placeholder="Password" required />
+            <input type="password" placeholder="Password" name="registerPassword" required onChange= {(e) => setRegisterPassword(e.target.value)}/>
             <i className="bx bxs-lock-alt"></i>
           </div>
-          <button type="submit" className="btn">
+          <button type="submit" className="btn" onClick={handleRegisterSubmit}>
             Register
           </button>
           <p>or register with social platforms</p>
