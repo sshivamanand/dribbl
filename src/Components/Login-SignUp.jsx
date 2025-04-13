@@ -24,7 +24,7 @@ function LoginSignUp() {
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/signup", {
+      const response = await axios.post("http://192.168.56.1:3000/signup", {
         username: registerUsername,
         email: registerEmail,
         password: registerPassword,
@@ -46,7 +46,7 @@ function LoginSignUp() {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/login", {
+      const response = await axios.post("http://192.168.56.1:3000/login", {
         username: loginUsername,
         password: loginPassword,
       });

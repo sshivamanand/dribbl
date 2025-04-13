@@ -7,16 +7,17 @@ import cors from "cors";
 
 const app = express();
 const port = 3000;
+const host = "192.168.56.1"; // Replace this with your actual local IP
 const saltRounds = 10;
 import WebSocket, { WebSocketServer } from "ws";
-const wss = new WebSocketServer({ port: 3001 });
+const wss = new WebSocketServer({ host, port: 3001 });
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "*",
     credentials: true,
   })
 );
@@ -136,14 +137,14 @@ app.post("/logout", (req, res) => {
   // Check if the user is logged in and remove their socket
   const clientSocket = activeConnections.get(username);
   if (clientSocket) {
-    clientSocket.close(); // Close WebSocket connection
-    activeConnections.delete(username); // Remove from active connections
+    clientSocket.close();
+    activeConnections.delete(username);
     res.status(200).json({ message: "Logout successful" });
   } else {
     res.status(400).json({ message: "User not logged in" });
   }
 });
 
-app.listen(port, () => {
-  console.log("Server is now live on port", port);
+app.listen(port, host, () => {
+  console.log(`Server is now live at http://${host}:${port}`);
 });

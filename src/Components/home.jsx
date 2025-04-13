@@ -13,7 +13,7 @@ function Home() {
   const socketRef = useRef(null);
 
   useEffect(() => {
-    socketRef.current = new WebSocket("ws://localhost:3001");
+    socketRef.current = new WebSocket("ws://192.168.56.1:3001");
     socketRef.current.onopen = () => {
       console.log("WebSocket connected");
     };
@@ -89,19 +89,16 @@ function Home() {
   };
 
   const handleLogout = () => {
-    // Close WebSocket connection gracefully
     if (socketRef.current) {
       socketRef.current.close();
       console.log("WebSocket closed on logout");
     }
 
-    // Clear local states (optional, if you want to reset everything)
     setUsers([]);
     setSelectedUser(null);
     setAllMessages({});
 
-    // Navigate the user back to the login page
-    navigate("/"); // Assuming "/login" is your login route
+    navigate("/");
   };
 
   return (
