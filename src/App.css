@@ -11,19 +11,44 @@
   overflow: hidden;
   height: 102vh;
   width: 5vw;
-  background-color: #72bf78;
+  background: linear-gradient(0deg, #e2e2e2, #72bf78);
   transition: width 0.4s;
 }
 
 .chats {
   display: flex;
+  flex-direction: column;
   width: 100%;
   height: 102vh;
   background-color: #d3ee98;
 }
 
+.add-user-img {
+  opacity: 1;
+  transition: opacity 0.4s;
+}
+
+.messages {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 80%;
+  padding-left: 1rem;
+  background: linear-gradient(0deg, #feff9f, #a0d683);
+}
+
 .contacts:hover {
   width: 25vw;
+  .add-user-img {
+    opacity: 0;
+  }
+}
+
+.message-input {
+  padding: 1rem;
+  display: flex;
+  width: 100%;
+  background-color: #d3ee98;
 }
 
 .user-detail {
@@ -43,25 +68,22 @@
   border-radius: 40%;
 }
 
-.search {
+.header {
+  display: flex;
+}
+
+.add-user-img {
   display: flex;
   height: 2rem;
   margin: 1.3rem;
 }
 
-.header {
+.add-user {
   display: flex;
-}
-
-.search-box {
-  border: none;
-  height: 2rem;
-  width: 13vw;
-  margin-top: 1.14rem;
-  border-radius: 10rem;
-  font-size: 1.1rem;
-  padding-left: 1rem;
-  overflow: hidden;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  margin-left: 0.85rem;
+  margin-top: 1rem;
 }
 
 .users {
@@ -90,11 +112,54 @@
 
 .user-name {
   display: inline-flex;
-  width: 11vw;
-  height: 4vh;
-  background-color: #f3ee9f;
-  padding-left: 1rem;
-  margin: 1rem;
-  border-radius: 10rem;
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: black;
+  background: #d3ee98;
+  text-decoration: none;
   text-align: center;
+}
+
+.logged_in_user {
+  text-decoration: none;
+  color: black;
+  font-size: 1.2rem;
+  font-weight: 500;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin-left: 1rem;
+  background-color: #f3ee9f;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+  text-align: center;
+}
+.logged_in_user:hover {
+  background-color: #72bf78;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  text-decoration: none;
+  color: black;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.user-img-logged_in {
+  display: inline-flex;
+  background-color: white;
+  width: 3rem;
+  height: 3rem;
+  margin: 0.5rem;
+  margin-left: 0.85rem;
+  border-radius: 40%;
 }
