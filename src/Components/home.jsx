@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import addimg from "../Components/add.png";
 
 function Home() {
   const { username } = useParams();
+  const navigate = useNavigate(); // For redirecting to login page
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [messageText, setMessageText] = useState("");
@@ -87,6 +88,22 @@ function Home() {
     }
   };
 
+  const handleLogout = () => {
+    // Close WebSocket connection gracefully
+    if (socketRef.current) {
+      socketRef.current.close();
+      console.log("WebSocket closed on logout");
+    }
+
+    // Clear local states (optional, if you want to reset everything)
+    setUsers([]);
+    setSelectedUser(null);
+    setAllMessages({});
+
+    // Navigate the user back to the login page
+    navigate("/"); // Assuming "/login" is your login route
+  };
+
   return (
     <div className="display">
       <div className="contacts">
@@ -111,6 +128,9 @@ function Home() {
         <div className="user-detail">
           <div className="user-img-logged-in"></div>
           <p className="logged_in_user">{username}</p>
+          <button className="logout-btn" onClick={handleLogout}>
+            Logout
+          </button>
         </div>
 
         <div className="messages">

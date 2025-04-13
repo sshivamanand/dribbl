@@ -11,7 +11,7 @@
   overflow: hidden;
   height: 102vh;
   width: 5vw;
-  background: linear-gradient(0deg, #e2e2e2, #72bf78);
+  background: linear-gradient(0deg, #ffffff, #72bf78);
   transition: width 0.4s;
 }
 
@@ -48,11 +48,12 @@
   padding: 1rem;
   display: flex;
   width: 100%;
-  background-color: #d3ee98;
+  background: linear-gradient(180deg, #feff9f, #a0d683);
 }
 
 .user-detail {
   display: flex;
+  
   background-color: #a0d683;
   height: 9vh;
   width: 100%;
@@ -152,6 +153,25 @@
   color: black;
   text-align: center;
   font-size: 1.2rem;
+}
+
+.logout-btn {
+  display: flex;
+  margin-top: 1rem;
+  margin-left: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background-color: #a62c2c;
+  border-radius: 10px;
+  color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  ;
 }
 
 .user-img-logged_in {
