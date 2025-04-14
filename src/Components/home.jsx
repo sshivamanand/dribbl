@@ -4,7 +4,7 @@ import addimg from "../Components/add.png";
 
 function Home() {
   const { username } = useParams();
-  const navigate = useNavigate(); // For redirecting to login page
+  const navigate = useNavigate(); 
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
   const [messageText, setMessageText] = useState("");
@@ -13,7 +13,7 @@ function Home() {
   const socketRef = useRef(null);
 
   useEffect(() => {
-    socketRef.current = new WebSocket("ws://192.168.56.1:3001");
+    socketRef.current = new WebSocket("wss://192.168.1.34:3001");
     socketRef.current.onopen = () => {
       console.log("WebSocket connected");
     };
@@ -48,6 +48,7 @@ function Home() {
       console.log("WebSocket disconnected");
     };
 
+    /* Graceful Termination */
     return () => {
       socketRef.current.close();
     };

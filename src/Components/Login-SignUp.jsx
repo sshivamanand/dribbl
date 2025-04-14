@@ -24,7 +24,7 @@ function LoginSignUp() {
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://192.168.56.1:3000/signup", {
+      const response = await axios.post("https://192.168.1.34:3001/signup", {
         username: registerUsername,
         email: registerEmail,
         password: registerPassword,
@@ -39,6 +39,7 @@ function LoginSignUp() {
         setIsLoginActive(true);
       }
     } catch (error) {
+      alert("Registration Failed!")
       setErrorMessage(error.response?.data?.message || "Registration failed");
     }
   };
@@ -46,7 +47,7 @@ function LoginSignUp() {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://192.168.56.1:3000/login", {
+      const response = await axios.post("https://192.168.1.34:3001/login", {
         username: loginUsername,
         password: loginPassword,
       });
