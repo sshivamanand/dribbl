@@ -24,7 +24,7 @@ function LoginSignUp() {
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://192.168.1.34:3001/signup", {
+      const response = await axios.post("https://10.1.16.251:3001/signup", {
         username: registerUsername,
         email: registerEmail,
         password: registerPassword,
@@ -47,7 +47,7 @@ function LoginSignUp() {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://192.168.1.34:3001/login", {
+      const response = await axios.post("https://10.1.16.251:3001/login", {
         username: loginUsername,
         password: loginPassword,
       });

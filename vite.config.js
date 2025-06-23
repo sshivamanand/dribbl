@@ -6,7 +6,7 @@ import path from "path";
 export default defineConfig({
   plugins: [react()],
   server: {
-    host: "192.168.1.34", 
+    host: "10.1.16.251", 
     port: 5173,
     https: {
       key: fs.readFileSync(path.resolve(__dirname, "ssl/private.key")),

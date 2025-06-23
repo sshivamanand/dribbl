@@ -9,7 +9,7 @@ import https from "https";
 /* Native NodeJs Library */
 import WebSocket, { WebSocketServer } from "ws";
 
-const host = "192.168.1.34"; 
+const host = "10.1.16.251 "; 
 const port = 3001;
 const saltRounds = 10;
 

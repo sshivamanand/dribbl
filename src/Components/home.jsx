@@ -13,7 +13,7 @@ function Home() {
   const socketRef = useRef(null);
 
   useEffect(() => {
-    socketRef.current = new WebSocket("wss://192.168.1.34:3001");
+    socketRef.current = new WebSocket("wss://10.1.16.251:3001");
     socketRef.current.onopen = () => {
       console.log("WebSocket connected");
     };
