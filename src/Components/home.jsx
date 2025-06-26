@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import addimg from "../assets/add.png";
+import addimg from "./add.png";
 
 // write your IP here
 const YOUR_IP = "";
