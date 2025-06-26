@@ -3,6 +3,9 @@ import "./Login-SignUp.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
+// write your IP here
+const YOUR_IP = "";
+
 function LoginSignUp() {
   const [isLoginActive, setIsLoginActive] = useState(true);
   const [loginUsername, setLoginUsername] = useState("");
@@ -24,7 +27,7 @@ function LoginSignUp() {
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://10.1.16.251:3001/signup", {
+      const response = await axios.post(`https://${YOUR_IP}:3001/signup`, {
         username: registerUsername,
         email: registerEmail,
         password: registerPassword,
@@ -47,7 +50,7 @@ function LoginSignUp() {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://10.1.16.251:3001/login", {
+      const response = await axios.post(`https://${YOUR_IP}:3001/login`, {
         username: loginUsername,
         password: loginPassword,
       });

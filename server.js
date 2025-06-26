@@ -9,12 +9,17 @@ import https from "https";
 /* Native NodeJs Library */
 import WebSocket, { WebSocketServer } from "ws";
 
-const host = "10.1.16.251 "; 
+// write your details here
+
+const YOUR_IP = "";
+const YOUR_DB_PWD = "";
+const YOUR_DB = "";
+
+const host = YOUR_IP; 
 const port = 3001;
 const saltRounds = 10;
 
-/* A working SSL Implemenation */
-
+/* A working SSL Implementation */
 const privateKey = fs.readFileSync("ssl/private.key", "utf8");
 const certificate = fs.readFileSync("ssl/certificate.crt", "utf8");
 const credentials = { key: privateKey, cert: certificate };
@@ -27,8 +32,8 @@ app.use(cors({ origin: "*", credentials: true }));
 const db = new pg.Client({
   user: "postgres",
   host: "localhost",
-  database: "dribble_db",
-  password: "shivam",
+  database: YOUR_DB,
+  password: YOUR_DB_PWD,
   port: 5432,
 });
 db.connect();
@@ -50,13 +55,23 @@ wss.on("connection", (ws) => {
         currentUser = data.payload.username;
         activeConnections.set(currentUser, ws);
         console.log(`🔗 ${currentUser} connected`);
+        return; // Don't broadcast login messages
       }
 
-      wss.clients.forEach((client) => {
-        if (client !== ws && client.readyState === WebSocket.OPEN) {
-          client.send(JSON.stringify(data));
+      if (data.type === "message") {
+        console.log(`📨 Message from ${data.payload.sender} to ${data.payload.receiver}: ${data.payload.text}`);
+        
+        // Send to specific recipient if they're online
+        const recipientWs = activeConnections.get(data.payload.receiver);
+        if (recipientWs && recipientWs.readyState === WebSocket.OPEN) {
+          recipientWs.send(JSON.stringify(data));
         }
-      });
+        
+        // Also send back to sender for confirmation
+        if (ws.readyState === WebSocket.OPEN) {
+          ws.send(JSON.stringify(data));
+        }
+      }
     } catch (err) {
       console.error("Invalid WS message:", err);
     }
@@ -113,11 +128,6 @@ app.post("/login", async (req, res) => {
       message: "Login successful",
       user: { username: user.username, email: user.email },
     });
-
-    const wsClient = activeConnections.get(username);
-    if (wsClient) {
-      wsClient.send(JSON.stringify({ type: "login", payload: { username } }));
-    }
   } catch (err) {
     console.error("Login error:", err);
     res.status(500).json({ message: "Internal server error" });
@@ -140,4 +150,3 @@ app.post("/logout", (req, res) => {
 httpsServer.listen(port, host, () => {
   console.log(`Server running at https://${host}:${port}`);
 });
-

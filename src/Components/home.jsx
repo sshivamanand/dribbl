@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import addimg from "../Components/add.png";
+import addimg from "../assets/add.png";
+
+// write your IP here
+const YOUR_IP = "";
 
 function Home() {
   const { username } = useParams();
@@ -13,9 +16,15 @@ function Home() {
   const socketRef = useRef(null);
 
   useEffect(() => {
-    socketRef.current = new WebSocket("wss://10.1.16.251:3001");
+    socketRef.current = new WebSocket(`wss://${YOUR_IP}:3001`);
+    
     socketRef.current.onopen = () => {
       console.log("WebSocket connected");
+      // Send login message to register user
+      socketRef.current.send(JSON.stringify({
+        type: "login",
+        payload: { username }
+      }));
     };
 
     socketRef.current.onmessage = (event) => {
@@ -28,10 +37,6 @@ function Home() {
 
         if (!users.includes(chatUser)) {
           setUsers((prev) => [...prev, chatUser]);
-        }
-
-        if (!selectedUser || selectedUser !== chatUser) {
-          setSelectedUser(chatUser);
         }
 
         setAllMessages((prev) => {
@@ -50,9 +55,11 @@ function Home() {
 
     /* Graceful Termination */
     return () => {
-      socketRef.current.close();
+      if (socketRef.current) {
+        socketRef.current.close();
+      }
     };
-  }, [username, users, selectedUser]);
+  }, [username]);
 
   const AddUser = () => {
     const user = prompt("Enter the username of the user you want to add:");
@@ -66,26 +73,25 @@ function Home() {
   };
 
   const sendMessage = () => {
-    if (messageText.trim() && selectedUser) {
+    if (messageText.trim() && selectedUser && socketRef.current) {
       const newMsg = {
         type: "message",
         payload: {
           sender: username,
           receiver: selectedUser,
           text: messageText,
+          timestamp: new Date().toISOString(),
         },
       };
+      
       socketRef.current.send(JSON.stringify(newMsg));
-
-      setAllMessages((prev) => {
-        const existing = prev[selectedUser] || [];
-        return {
-          ...prev,
-          [selectedUser]: [...existing, newMsg.payload],
-        };
-      });
-
       setMessageText("");
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      sendMessage();
     }
   };
 
@@ -158,6 +164,7 @@ function Home() {
               type="text"
               value={messageText}
               onChange={(e) => setMessageText(e.target.value)}
+              onKeyPress={handleKeyPress}
               placeholder={`Message ${selectedUser}`}
             />
             <button onClick={sendMessage}>Send</button>
